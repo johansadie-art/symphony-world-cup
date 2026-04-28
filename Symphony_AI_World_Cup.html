@@ -7,10 +7,51 @@
 <style>
   html, body { margin: 0; padding: 0; background: #0B0B14; height: 100%; }
   *, *::before, *::after { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
+  body.locked deck-stage { display: none; }
+  #auth-gate {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: #0B0B14;
+    z-index: 9999;
+    font-family: "Poppins", system-ui, -apple-system, sans-serif;
+  }
+  #auth-gate[hidden] { display: none; }
+  .auth-card {
+    width: min(92vw, 440px);
+    padding: 28px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff;
+  }
+  .auth-card h1 { margin: 0 0 10px; font-size: 28px; }
+  .auth-card p { margin: 0 0 16px; color: rgba(255,255,255,0.72); font-size: 15px; line-height: 1.45; }
+  .auth-card input {
+    width: 100%; height: 44px; padding: 0 12px;
+    border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(0, 0, 0, 0.25); color: #fff;
+    outline: none;
+  }
+  .auth-card button {
+    margin-top: 12px; width: 100%; height: 44px;
+    border: 0; border-radius: 10px;
+    background: #6C69FF; color: #fff; font-weight: 600; cursor: pointer;
+  }
+  #auth-error { margin-top: 10px; min-height: 20px; color: #FF9A9A; font-size: 13px; }
 </style>
 <script type="application/json" id="speaker-notes">[]</script>
 </head>
-<body>
+<body class="locked">
+
+<div id="auth-gate">
+  <form class="auth-card" id="auth-form">
+    <h1>Protected Deck</h1>
+    <p>Enter the password to view this presentation.</p>
+    <input id="auth-password" type="password" autocomplete="current-password" placeholder="Password" />
+    <button type="submit">Unlock</button>
+    <div id="auth-error"></div>
+  </form>
+</div>
 
 <deck-stage width="1920" height="1080">
   <div id="s1"></div>
@@ -37,6 +78,37 @@
   <div id="s22"></div>
   <div id="s23"></div>
 </deck-stage>
+
+<script>
+  // Change this value to rotate the deck password.
+  const DECK_PASSWORD = "worldcup2026";
+  const AUTH_KEY = "sym_wc_deck_auth";
+
+  function unlockDeck() {
+    document.body.classList.remove("locked");
+    document.getElementById("auth-gate").hidden = true;
+    sessionStorage.setItem(AUTH_KEY, "ok");
+  }
+
+  if (sessionStorage.getItem(AUTH_KEY) === "ok") {
+    unlockDeck();
+  } else {
+    const form = document.getElementById("auth-form");
+    const input = document.getElementById("auth-password");
+    const error = document.getElementById("auth-error");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (input.value === DECK_PASSWORD) {
+        unlockDeck();
+      } else {
+        error.textContent = "Incorrect password. Please try again.";
+        input.value = "";
+        input.focus();
+      }
+    });
+    setTimeout(() => input.focus(), 0);
+  }
+</script>
 
 <script src="scripts/deck-stage.js"></script>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
