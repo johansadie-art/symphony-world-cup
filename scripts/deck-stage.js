@@ -96,6 +96,7 @@
       opacity: 0;
       pointer-events: none;
       visibility: hidden;
+      transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1);
     }
     ::slotted([data-deck-active]) {
       opacity: 1;
@@ -130,12 +131,12 @@
       filter: blur(6px);
       display: flex;
       align-items: center;
-      gap: 4px;
-      padding: 4px;
+      gap: 8px;
+      padding: 8px 12px;
       background: #000;
       color: #fff;
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 18px;
       font-feature-settings: "tnum" 1;
       letter-spacing: 0.01em;
       opacity: 0;
@@ -165,8 +166,8 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      height: 28px;
-      min-width: 28px;
+      height: 40px;
+      min-width: 40px;
       border-radius: 999px;
       color: rgba(255,255,255,0.72);
       transition: background 140ms ease, color 140ms ease;
@@ -177,24 +178,24 @@
     .btn:focus { outline: none; }
     .btn:focus-visible { outline: none; }
     .btn::-moz-focus-inner { border: 0; }
-    .btn svg { width: 14px; height: 14px; display: block; }
+    .btn svg { width: 18px; height: 18px; display: block; }
     .btn.reset {
-      font-size: 11px;
+      font-size: 18px;
       font-weight: 500;
       letter-spacing: 0.02em;
-      padding: 0 10px 0 12px;
-      gap: 6px;
+      padding: 0 14px 0 16px;
+      gap: 8px;
       color: rgba(255,255,255,0.72);
     }
     .btn.reset .kbd {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 16px;
-      height: 16px;
-      padding: 0 4px;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 6px;
       font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 10px;
+      font-size: 18px;
       line-height: 1;
       color: rgba(255,255,255,0.88);
       background: rgba(255,255,255,0.12);
@@ -205,17 +206,17 @@
       font-variant-numeric: tabular-nums;
       color: #fff;
       font-weight: 500;
-      padding: 0 8px;
-      min-width: 42px;
+      padding: 0 10px;
+      min-width: 56px;
       text-align: center;
-      font-size: 12px;
+      font-size: 18px;
     }
     .count .sep { color: rgba(255,255,255,0.45); margin: 0 3px; font-weight: 400; }
     .count .total { color: rgba(255,255,255,0.55); }
 
     .divider {
       width: 1px;
-      height: 14px;
+      height: 22px;
       background: rgba(255,255,255,0.18);
       margin: 0 2px;
     }
@@ -252,6 +253,7 @@
         opacity: 1 !important;
         visibility: visible !important;
         pointer-events: auto;
+        transition: none !important;
         break-after: page;
         page-break-after: always;
         break-inside: avoid;

@@ -72,10 +72,10 @@
   --fs-h3:         1.5rem;                        /* 24 */
   --fs-h4:         1.25rem;                       /* 20 */
   --fs-body-lg:    1.125rem;                      /* 18 */
-  --fs-body:       1rem;                          /* 16 */
-  --fs-body-sm:    0.875rem;                      /* 14 */
-  --fs-caption:    0.75rem;                       /* 12 */
-  --fs-eyebrow:    0.8125rem;                     /* 13 */
+  --fs-body:       1.125rem;                      /* 18 — min body size */
+  --fs-body-sm:    1.125rem;                      /* 18 — aligned with body */
+  --fs-caption:    1.125rem;                      /* 18 — min supporting text */
+  --fs-eyebrow:    1.125rem;                      /* 18 — min text size */
 
   --lh-tight:      1.05;
   --lh-snug:       1.2;

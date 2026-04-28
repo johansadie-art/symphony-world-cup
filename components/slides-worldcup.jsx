@@ -23,6 +23,8 @@ const WC = {
 const F  = '"Poppins", system-ui, -apple-system, sans-serif';
 const FM = 'ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace';
 
+// Type scale (px at 1920×1080 stage). Supporting/meta copy uses `small` (24px); nothing below MIN_FONT_PX.
+const MIN_FONT_PX = 18;
 const S = {
   displayXL: 112,
   display:   80,
@@ -31,9 +33,7 @@ const S = {
   lead:      34,
   body:      30,
   bodyS:     26,
-  small:     22,
-  micro:     17,
-  caption:   15,
+  small:     24,
 };
 
 const PX = 110, PT = 88, PB = 80;
@@ -53,10 +53,11 @@ function Logo({ dark = false, size = 44 }) {
 
 // ─── Base components ────────────────────────────────────────────────────────
 
-function Slide({ bg = WC.paper, pad = true, children, label, dark = false }) {
+function Slide({ bg = WC.paper, pad = true, children, label, dark = false, noEnterAnimation = false }) {
   return (
     <section
       data-screen-label={label}
+      data-deck-no-enter={noEnterAnimation ? '' : undefined}
       style={{
         width: '100%', height: '100%',
         background: bg, color: WC.ink, fontFamily: F,
@@ -82,15 +83,15 @@ function Rail({ chapter }) {
     }}>
       <div style={{ width: 9, height: 9, borderRadius: '50%', background: WC.indigo, flexShrink: 0 }} />
       <span style={{
-        fontFamily: FM, fontSize: S.micro, fontWeight: 600,
+        fontFamily: FM, fontSize: S.small, fontWeight: 600,
         letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink2,
       }}>
         Symphony AI World Cup
       </span>
       {chapter && (
         <>
-          <span style={{ color: WC.line2, fontSize: S.micro }}>/</span>
-          <span style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.08em', textTransform: 'uppercase', color: WC.ink4 }}>{chapter}</span>
+          <span style={{ color: WC.line2, fontSize: S.small }}>/</span>
+          <span style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.08em', textTransform: 'uppercase', color: WC.ink4 }}>{chapter}</span>
         </>
       )}
     </div>
@@ -101,7 +102,7 @@ function Tag({ children, color = WC.indigo, bg = WC.indigo50 }) {
   return (
     <span style={{
       display: 'inline-flex', alignItems: 'center',
-      padding: '6px 14px', fontSize: S.micro, fontWeight: 600,
+      padding: '8px 16px', fontSize: S.small, fontWeight: 600,
       borderRadius: 999, background: bg, color,
       letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: FM,
     }}>
@@ -110,14 +111,37 @@ function Tag({ children, color = WC.indigo, bg = WC.indigo50 }) {
   );
 }
 
+/** Subtle hover lift for card grids (keyboard-safe: visual only). */
+function HoverLift({ children, style = {}, dark = false }) {
+  const [on, setOn] = React.useState(false);
+  const shadow = dark
+    ? '0 22px 50px rgba(0, 0, 0, 0.38)'
+    : '0 18px 46px rgba(11, 11, 20, 0.14)';
+  return (
+    <div
+      onMouseEnter={() => setOn(true)}
+      onMouseLeave={() => setOn(false)}
+      style={{
+        ...style,
+        transition: 'transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease',
+        transform: on ? 'translateY(-5px)' : 'translateY(0)',
+        boxShadow: on ? shadow : (style.boxShadow ?? 'none'),
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 function Bullet({ children, size = S.small, color = WC.ink2 }) {
+  const fontSize = Math.max(MIN_FONT_PX, size);
   return (
     <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
       <span style={{
         width: 7, height: 7, borderRadius: '50%', background: WC.indigo,
-        flexShrink: 0, marginTop: size * 0.38,
+        flexShrink: 0, marginTop: fontSize * 0.38,
       }} />
-      <div style={{ fontSize: size, color, lineHeight: 1.45 }}>{children}</div>
+      <div style={{ fontSize, color, lineHeight: 1.45 }}>{children}</div>
     </div>
   );
 }
@@ -145,7 +169,7 @@ function DividerSlide({ sectionNum, title, subtitle, footer, label }) {
         <Logo dark />
       </div>
 
-      <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
+      <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
         Section {sectionNum}
       </div>
 
@@ -164,7 +188,7 @@ function DividerSlide({ sectionNum, title, subtitle, footer, label }) {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: 24 }}>
-        <div style={{ fontFamily: FM, fontSize: S.micro, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <div style={{ fontFamily: FM, fontSize: S.small, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           {footer}
         </div>
       </div>
@@ -206,7 +230,7 @@ function WC_Cover() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <div style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(255,255,255,0.6)' }} />
-            <span style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
+            <span style={{ fontFamily: FM, fontSize: S.small, fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
               Symphony
             </span>
           </div>
@@ -231,7 +255,7 @@ function WC_Cover() {
           display: 'flex', alignItems: 'center',
           paddingTop: 28, borderTop: '1px solid rgba(255,255,255,0.15)',
         }}>
-          <div style={{ fontFamily: FM, fontSize: S.caption, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <div style={{ fontFamily: FM, fontSize: S.small, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             Multi-disciplinary · Quarterly rounds · Grand Final
           </div>
         </div>
@@ -271,7 +295,7 @@ function WC_WhatIsIt() {
               <div key={i} style={{
                 padding: '10px 18px',
                 background: WC.surface, border: `1px solid ${WC.line}`,
-                borderRadius: 8, fontSize: S.caption, fontWeight: 600,
+                borderRadius: 8, fontSize: S.small, fontWeight: 600,
                 color: WC.ink3, letterSpacing: '0.02em',
               }}>{t}</div>
             ))}
@@ -309,7 +333,7 @@ function WC_Objectives() {
               padding: '22px 0',
               borderBottom: i < items.length - 1 ? `1px solid ${WC.line}` : 'none',
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo, flexShrink: 0, marginTop: 3, width: 28 }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, flexShrink: 0, marginTop: 3, width: 28 }}>
                 {String(i + 1).padStart(2, '0')}
               </div>
               <div>
@@ -366,10 +390,10 @@ function WC_SeasonStructure() {
                     <path d="M10 2l2.2 5.8H18l-4.8 3.5 1.8 6L10 14l-5 3.3 1.8-6L2 7.8h5.8z" fill="#fff"/>
                   </svg>
                 ) : (
-                  <span style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo }}>{m.n}</span>
+                  <span style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo }}>{m.n}</span>
                 )}
               </div>
-              <div style={{ fontFamily: FM, fontSize: S.caption, letterSpacing: '0.08em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 8 }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.08em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 8 }}>
                 {m.label}
               </div>
               <div style={{ fontSize: S.subtitle, fontWeight: 700, color: m.highlight ? WC.indigo : WC.ink, letterSpacing: '-0.01em', lineHeight: 1.1, marginBottom: 10 }}>
@@ -422,13 +446,13 @@ function WC_RoundEntry() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 22, flex: 1 }}>
           {cards.map((c, i) => (
-            <div key={i} style={{
+            <HoverLift key={i} dark={!!c.accent} style={{
               background: c.accent ? WC.indigo : WC.paper,
               border: `1px solid ${c.accent ? WC.indigo : WC.line}`,
               borderRadius: 16, padding: '32px 30px',
               display: 'flex', flexDirection: 'column', gap: 16,
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: c.accent ? 'rgba(255,255,255,0.5)' : WC.indigo, letterSpacing: '0.1em' }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: c.accent ? 'rgba(255,255,255,0.5)' : WC.indigo, letterSpacing: '0.1em' }}>
                 {c.n}
               </div>
               <div style={{ fontSize: S.bodyS, fontWeight: 700, color: c.accent ? '#fff' : WC.ink, lineHeight: 1.2, letterSpacing: '-0.01em' }}>
@@ -437,7 +461,7 @@ function WC_RoundEntry() {
               <div style={{ fontSize: S.small, color: c.accent ? 'rgba(255,255,255,0.72)' : WC.ink3, lineHeight: 1.5, flex: 1 }}>
                 {c.body}
               </div>
-            </div>
+            </HoverLift>
           ))}
         </div>
       </div>
@@ -454,7 +478,7 @@ function WC_SeasonKickoff() {
     { label: 'Day 1', title: 'Round 1 begins', desc: 'The season is live. Teams begin Foundation phase.', highlight: true },
   ];
   return (
-    <Slide bg={WC.paper} label="06 Season Kickoff">
+    <Slide bg={WC.paper} label="06 Season Kickoff" noEnterAnimation>
       <Rail chapter="Season" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 56 }}>
         <div>
@@ -488,16 +512,16 @@ function WC_SeasonKickoff() {
                     <path d="M5 9l3 3 5-6" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 ) : (
-                  <span style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo }}>{String(i + 1).padStart(2, '0')}</span>
                 )}
               </div>
-              <div style={{ fontFamily: FM, fontSize: S.caption, letterSpacing: '0.08em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 8 }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.08em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 8 }}>
                 {m.label}
               </div>
               <div style={{ fontSize: S.lead, fontWeight: 700, color: m.highlight ? WC.indigo : WC.ink, letterSpacing: '-0.01em', lineHeight: 1.1, marginBottom: 10 }}>
                 {m.title}
               </div>
-              <div style={{ fontSize: S.caption, color: WC.ink3, lineHeight: 1.45, maxWidth: '24ch' }}>
+              <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.45, maxWidth: '24ch' }}>
                 {m.desc}
               </div>
             </div>
@@ -549,7 +573,7 @@ function WC_TeamComposition() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, flex: 1 }}>
           {disciplines.map((d, i) => (
-            <div key={i} style={{
+            <HoverLift key={i} style={{
               background: WC.paper, border: `1px solid ${WC.line}`,
               borderTop: `4px solid ${d.color}`,
               borderRadius: 16, padding: '30px 26px',
@@ -559,7 +583,7 @@ function WC_TeamComposition() {
               <div style={{ fontSize: 34, lineHeight: 1, fontFamily: FM }}>{d.icon}</div>
               <div style={{ fontSize: S.bodyS, fontWeight: 700, color: WC.ink, lineHeight: 1.2 }}>{d.name}</div>
               <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.45, flex: 1 }}>{d.desc}</div>
-            </div>
+            </HoverLift>
           ))}
         </div>
 
@@ -598,10 +622,10 @@ function WC_SMERule() {
               background: WC.surface, border: `1px solid ${WC.line}`,
               borderRadius: 12, padding: '16px 18px',
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.caption, fontWeight: 700, color: WC.indigo, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
                 Process improvement
               </div>
-              <div style={{ fontSize: S.caption, color: WC.ink3, lineHeight: 1.45 }}>
+              <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.45 }}>
                 Documents the as-is state and validates that the measured delta is real.
               </div>
             </div>
@@ -609,10 +633,10 @@ function WC_SMERule() {
               background: WC.surface, border: `1px solid ${WC.line}`,
               borderRadius: 12, padding: '16px 18px',
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.caption, fontWeight: 700, color: WC.indigo, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>
                 Net new idea
               </div>
-              <div style={{ fontSize: S.caption, color: WC.ink3, lineHeight: 1.45 }}>
+              <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.45 }}>
                 Acts as the business authority — the opportunity is genuine, the value is real.
               </div>
             </div>
@@ -629,7 +653,7 @@ function WC_SMERule() {
               </div>
               <div>
                 <div style={{ fontSize: S.small, fontWeight: 600, color: WC.ink, marginBottom: 4 }}>{title}</div>
-                <div style={{ fontSize: S.caption, color: WC.ink3, lineHeight: 1.45 }}>{body}</div>
+                <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.45 }}>{body}</div>
               </div>
             </div>
           ))}
@@ -670,7 +694,7 @@ function WC_RegionalModel() {
           </div>
         </div>
         <div>
-          <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 20 }}>
+          <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 20 }}>
             Responsibilities
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -680,7 +704,7 @@ function WC_RegionalModel() {
                 padding: '18px 0',
                 borderBottom: i < duties.length - 1 ? `1px solid ${WC.line}` : 'none',
               }}>
-                <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo, flexShrink: 0, marginTop: 2, width: 24 }}>
+                <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, flexShrink: 0, marginTop: 2, width: 24 }}>
                   {String(i + 1).padStart(2, '0')}
                 </div>
                 <div style={{ fontSize: S.small, color: WC.ink2, lineHeight: 1.45 }}>{d}</div>
@@ -726,7 +750,7 @@ function WC_CentralOwnership() {
           </div>
         </div>
         <div>
-          <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 20 }}>
+          <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 20 }}>
             What the central owner does
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -736,7 +760,7 @@ function WC_CentralOwnership() {
                 padding: '16px 0',
                 borderBottom: i < responsibilities.length - 1 ? `1px solid ${WC.line}` : 'none',
               }}>
-                <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo, flexShrink: 0, marginTop: 2, width: 24 }}>
+                <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, flexShrink: 0, marginTop: 2, width: 24 }}>
                   {String(i + 1).padStart(2, '0')}
                 </div>
                 <div style={{ fontSize: S.small, color: WC.ink2, lineHeight: 1.45 }}>{d}</div>
@@ -750,65 +774,81 @@ function WC_CentralOwnership() {
 }
 
 function WC_ProblemSourcing() {
+  const trackBody = {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    gap: 24,
+    minHeight: 0,
+  };
+  const trackShell = {
+    padding: `0 ${PX}px`,
+    paddingBottom: PB,
+    display: 'flex',
+    flexDirection: 'column',
+    background: WC.surface,
+    height: '100%',
+    minHeight: 0,
+  };
   return (
     <Slide bg={WC.paper} label="12 Problem Sourcing" pad={false}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', height: '100%' }}>
-        {/* Track A */}
-        <div style={{
-          padding: `${PT}px ${PX}px ${PB}px`,
-          display: 'flex', flexDirection: 'column',
-          borderRight: `1px solid ${WC.line2}`,
-        }}>
-          <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 56 }}>
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flexShrink: 0, paddingTop: PT, paddingLeft: PX, paddingRight: PX, paddingBottom: 40 }}>
+          <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4 }}>
             Symphony AI World Cup / Problem Sourcing
           </div>
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24 }}>
-            <Tag>Track A</Tag>
-            <div style={{ fontSize: S.subtitle, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: WC.ink }}>
-              The Problem Bank
+        </div>
+
+        <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 0, alignItems: 'stretch' }}>
+          {/* Track A */}
+          <div style={{ ...trackShell, borderRight: `1px solid ${WC.line2}` }}>
+            <div style={trackBody}>
+              <Tag>Track A</Tag>
+              <div style={{ fontSize: S.subtitle, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: WC.ink }}>
+                The Problem Bank
+              </div>
+              <div style={{ fontSize: S.bodyS, color: WC.ink2, lineHeight: 1.5 }}>
+                A curated backlog of real Symphony business problems compiled and maintained by leadership.
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {[
+                  'Pre-validated and scoped to a single round',
+                  'Comes with a named SME attached',
+                  'Team picks a problem; that SME joins the team',
+                ].map((t, i) => <Bullet key={i}>{t}</Bullet>)}
+              </div>
             </div>
-            <div style={{ fontSize: S.bodyS, color: WC.ink2, lineHeight: 1.5 }}>
-              A curated backlog of real Symphony business problems compiled and maintained by leadership.
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {[
-                'Pre-validated and scoped to a single round',
-                'Comes with a named SME attached',
-                'Team picks a problem; that SME joins the team',
-              ].map((t, i) => <Bullet key={i}>{t}</Bullet>)}
+          </div>
+
+          {/* Track B */}
+          <div style={{ ...trackShell, borderRight: 'none' }}>
+            <div style={trackBody}>
+              <Tag>Track B</Tag>
+              <div style={{ fontSize: S.subtitle, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: WC.ink }}>
+                Open Pitch
+              </div>
+              <div style={{ fontSize: S.bodyS, color: WC.ink2, lineHeight: 1.5 }}>
+                Teams identify their own problem and find their own SME from within that part of the business.
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                {[
+                  'Submit a one-paragraph problem statement before the round begins',
+                  'Reviewed and approved or redirected within 48 hours',
+                  'Team sources their own SME from within the business',
+                ].map((t, i) => <Bullet key={i}>{t}</Bullet>)}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Track B */}
-        <div style={{
-          padding: `${PT}px ${PX}px ${PB}px`,
-          background: WC.surface,
-          display: 'flex', flexDirection: 'column',
-        }}>
-          <div style={{ height: S.micro + 56 }} />
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24 }}>
-            <Tag color={WC.ink2} bg={WC.paper2}>Track B</Tag>
-            <div style={{ fontSize: S.subtitle, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: WC.ink }}>
-              Open Pitch
-            </div>
-            <div style={{ fontSize: S.bodyS, color: WC.ink2, lineHeight: 1.5 }}>
-              Teams identify their own problem and find their own SME from within that part of the business.
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-              {[
-                'Submit a one-paragraph problem statement before the round begins',
-                'Reviewed and approved or redirected within 48 hours',
-                'Team sources their own SME from within the business',
-              ].map((t, i) => <Bullet key={i}>{t}</Bullet>)}
-            </div>
-            <div style={{
-              background: WC.indigo50, border: `1px solid ${WC.indigo100}`,
-              borderRadius: 10, padding: '16px 20px',
-              fontSize: S.small, color: WC.indigo700, lineHeight: 1.4, fontWeight: 600,
-            }}>
-              Both tracks compete on equal terms. Judging criteria do not favour either.
-            </div>
+        <div style={{ flexShrink: 0, padding: `0 ${PX}px ${PB}px` }}>
+          <div style={{
+            background: WC.indigo50, border: `1px solid ${WC.indigo100}`,
+            borderRadius: 10, padding: '16px 20px',
+            fontSize: S.small, color: WC.indigo700, lineHeight: 1.4, fontWeight: 600, textAlign: 'center',
+          }}>
+            Both tracks compete on equal terms. Judging criteria do not favour either.
           </div>
         </div>
       </div>
@@ -839,24 +879,24 @@ function WC_QuarterlyRound() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18, flex: 1 }}>
           {phases.map((w, i) => (
-            <div key={i} style={{
+            <HoverLift key={i} dark={!!w.highlight} style={{
               background: w.highlight ? WC.indigo : WC.paper,
               border: `1px solid ${w.highlight ? WC.indigo : WC.line}`,
               borderRadius: 16, padding: '28px 26px',
               display: 'flex', flexDirection: 'column', gap: 14,
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: w.highlight ? 'rgba(255,255,255,0.5)' : WC.ink4 }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: w.highlight ? 'rgba(255,255,255,0.5)' : WC.ink4 }}>
                 {w.week}
               </div>
               <div style={{ fontSize: S.subtitle, fontWeight: 700, color: w.highlight ? '#fff' : WC.ink, letterSpacing: '-0.01em', lineHeight: 1.1 }}>
                 {w.title}
               </div>
               <div style={{ flex: 1, borderTop: `1px solid ${w.highlight ? 'rgba(255,255,255,0.2)' : WC.line}`, paddingTop: 14 }}>
-                <div style={{ fontSize: S.caption, lineHeight: 1.5, color: w.highlight ? 'rgba(255,255,255,0.72)' : WC.ink3 }}>
+                <div style={{ fontSize: S.small, lineHeight: 1.5, color: w.highlight ? 'rgba(255,255,255,0.78)' : WC.ink3 }}>
                   {w.activity}
                 </div>
               </div>
-            </div>
+            </HoverLift>
           ))}
         </div>
 
@@ -878,7 +918,7 @@ function WC_QuarterlyRound() {
                   border: item.accent ? 'none' : `1px solid ${WC.indigo100}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  <span style={{ color: item.accent ? '#fff' : WC.indigo, fontSize: S.micro, fontWeight: 700 }}>{item.n}</span>
+                  <span style={{ color: item.accent ? '#fff' : WC.indigo, fontSize: S.small, fontWeight: 700 }}>{item.n}</span>
                 </div>
                 <div style={{ fontSize: S.small, color: WC.ink2, fontWeight: 600 }}>{item.label}</div>
               </div>
@@ -916,20 +956,20 @@ function WC_WhatTeamsDeliver() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 18 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
           <Tag>Mandatory for all teams</Tag>
-          <div style={{ fontSize: S.caption, color: WC.ink4, letterSpacing: '0.04em' }}>
+          <div style={{ fontSize: S.small, color: WC.ink4, letterSpacing: '0.04em' }}>
             Missing any mandatory element disqualifies the submission.
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, flex: 1 }}>
           {mandatory.map((d, i) => (
-            <div key={i} style={{
+            <HoverLift key={i} dark={!!d.accent} style={{
               background: d.accent ? WC.indigo : WC.surface,
               border: `1px solid ${d.accent ? WC.indigo : WC.line}`,
               borderRadius: 16, padding: '28px 28px',
               display: 'flex', flexDirection: 'column', gap: 12,
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: d.accent ? 'rgba(255,255,255,0.5)' : WC.indigo, letterSpacing: '0.1em' }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: d.accent ? 'rgba(255,255,255,0.5)' : WC.indigo, letterSpacing: '0.1em' }}>
                 {d.n}
               </div>
               <div style={{ fontSize: S.bodyS, fontWeight: 700, lineHeight: 1.2, color: d.accent ? '#fff' : WC.ink, letterSpacing: '-0.01em' }}>
@@ -938,7 +978,7 @@ function WC_WhatTeamsDeliver() {
               <div style={{ fontSize: S.small, lineHeight: 1.5, color: d.accent ? 'rgba(255,255,255,0.7)' : WC.ink3, flex: 1 }}>
                 {d.body}
               </div>
-            </div>
+            </HoverLift>
           ))}
         </div>
 
@@ -947,38 +987,38 @@ function WC_WhatTeamsDeliver() {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
-          <div style={{
+          <HoverLift style={{
             background: WC.surface, border: `1px solid ${WC.line}`,
             borderRadius: 16, padding: '24px 28px',
             display: 'flex', flexDirection: 'column', gap: 10,
           }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo, letterSpacing: '0.1em' }}>04A</div>
-              <div style={{ fontFamily: FM, fontSize: S.caption, color: WC.ink4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Process improvement</div>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, letterSpacing: '0.1em' }}>04A</div>
+              <div style={{ fontFamily: FM, fontSize: S.small, color: WC.ink4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Process improvement</div>
             </div>
             <div style={{ fontSize: S.bodyS, fontWeight: 700, lineHeight: 1.2, color: WC.ink, letterSpacing: '-0.01em' }}>
               As-Is Process Documentation
             </div>
-            <div style={{ fontSize: S.caption, lineHeight: 1.5, color: WC.ink3 }}>
+            <div style={{ fontSize: S.small, lineHeight: 1.5, color: WC.ink3 }}>
               How did this process work before? Who did it, how long did it take, where were the pain points, what did it cost? The SME leads this — without it, the delta cannot be verified.
             </div>
-          </div>
-          <div style={{
+          </HoverLift>
+          <HoverLift style={{
             background: WC.surface, border: `1px solid ${WC.line}`,
             borderRadius: 16, padding: '24px 28px',
             display: 'flex', flexDirection: 'column', gap: 10,
           }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo, letterSpacing: '0.1em' }}>04B</div>
-              <div style={{ fontFamily: FM, fontSize: S.caption, color: WC.ink4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Net new idea</div>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, letterSpacing: '0.1em' }}>04B</div>
+              <div style={{ fontFamily: FM, fontSize: S.small, color: WC.ink4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Net new idea</div>
             </div>
             <div style={{ fontSize: S.bodyS, fontWeight: 700, lineHeight: 1.2, color: WC.ink, letterSpacing: '-0.01em' }}>
               Opportunity Definition
             </div>
-            <div style={{ fontSize: S.caption, lineHeight: 1.5, color: WC.ink3 }}>
+            <div style={{ fontSize: S.small, lineHeight: 1.5, color: WC.ink3 }}>
               What gap or opportunity did the team identify? Why does it matter to the business? What was the evidence it was worth solving? Replaces the as-is for teams building something that didn't previously exist.
             </div>
-          </div>
+          </HoverLift>
         </div>
       </div>
     </Slide>
@@ -1014,7 +1054,7 @@ function WC_DragonsDen() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18, flex: 1 }}>
           {dragons.map((d, i) => (
-            <div key={i} style={{
+            <HoverLift key={i} dark={!!d.highlight} style={{
               background: d.highlight ? WC.indigo : WC.surface,
               border: `1px solid ${d.highlight ? WC.indigo : WC.line}`,
               borderRadius: 16, padding: '28px 26px',
@@ -1035,7 +1075,7 @@ function WC_DragonsDen() {
                   {d.desc}
                 </div>
               </div>
-            </div>
+            </HoverLift>
           ))}
         </div>
       </div>
@@ -1062,7 +1102,7 @@ function WC_RoundScoringCriteria() {
           <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.5, marginBottom: 18 }}>
             40% of the round score comes from measurable business impact. Real results, real data — no projections accepted.
           </div>
-          <div style={{ fontSize: S.caption, color: WC.ink4, lineHeight: 1.45 }}>
+          <div style={{ fontSize: S.small, color: WC.ink4, lineHeight: 1.45 }}>
             The 20% criterion applies to both solution types: as-is documentation for process improvement, opportunity definition for net new ideas.
           </div>
         </div>
@@ -1105,7 +1145,7 @@ function WC_GrandFinalScoringCriteria() {
           <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.5, marginBottom: 18 }}>
             Round winners may have solved completely different problems. The Grand Final criteria assess the quality, significance, and scalability of each solution — not raw numbers compared head-to-head.
           </div>
-          <div style={{ fontSize: S.caption, color: WC.ink4, lineHeight: 1.45 }}>
+          <div style={{ fontSize: S.small, color: WC.ink4, lineHeight: 1.45 }}>
             Top round ideas. Dragon judging plus Symphony staff vote. One champion.
           </div>
         </div>
@@ -1154,11 +1194,11 @@ function WC_SupportingTeams() {
               borderRadius: 14, padding: '26px 22px',
               display: 'flex', flexDirection: 'column', gap: 14,
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: WC.indigo, letterSpacing: '0.1em' }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, letterSpacing: '0.1em' }}>
                 {String(i + 1).padStart(2, '0')}
               </div>
               <div style={{ fontSize: S.small, fontWeight: 700, color: WC.ink, lineHeight: 1.2 }}>{s.title}</div>
-              <div style={{ fontSize: S.caption, color: WC.ink3, lineHeight: 1.5, flex: 1 }}>{s.body}</div>
+              <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.5, flex: 1 }}>{s.body}</div>
             </div>
           ))}
         </div>
@@ -1204,7 +1244,7 @@ function WC_GrandFinalEvent() {
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 56 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <div style={{ width: 9, height: 9, borderRadius: '50%', background: 'rgba(255,255,255,0.6)' }} />
-          <span style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
+          <span style={{ fontFamily: FM, fontSize: S.small, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>
             Symphony AI World Cup / The Grand Final
           </span>
         </div>
@@ -1230,13 +1270,13 @@ function WC_GrandFinalEvent() {
                 border: '1px solid rgba(255,255,255,0.12)',
                 borderRadius: 12, padding: '16px 20px',
               }}>
-                <div style={{ fontFamily: FM, fontSize: S.caption, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 6 }}>
+                <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 6 }}>
                   {it.label}
                 </div>
                 <div style={{ fontSize: S.bodyS, fontWeight: 700, color: '#fff', letterSpacing: '-0.01em', marginBottom: 4 }}>
                   {it.value}
                 </div>
-                <div style={{ fontSize: S.caption, color: 'rgba(255,255,255,0.55)', lineHeight: 1.4 }}>
+                <div style={{ fontSize: S.small, color: 'rgba(255,255,255,0.55)', lineHeight: 1.4 }}>
                   {it.sub}
                 </div>
               </div>
@@ -1245,7 +1285,7 @@ function WC_GrandFinalEvent() {
         </div>
 
         <div>
-          <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>
+          <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 20 }}>
             How the night runs
           </div>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1255,7 +1295,7 @@ function WC_GrandFinalEvent() {
                 padding: '16px 0',
                 borderBottom: i < beats.length - 1 ? '1px solid rgba(255,255,255,0.10)' : 'none',
               }}>
-                <div style={{ fontFamily: FM, fontSize: S.micro, fontWeight: 700, color: 'rgba(255,255,255,0.5)', flexShrink: 0, marginTop: 2, width: 24 }}>
+                <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: 'rgba(255,255,255,0.5)', flexShrink: 0, marginTop: 2, width: 24 }}>
                   {String(i + 1).padStart(2, '0')}
                 </div>
                 <div style={{ fontSize: S.small, color: 'rgba(255,255,255,0.85)', lineHeight: 1.45 }}>{b}</div>
@@ -1269,7 +1309,7 @@ function WC_GrandFinalEvent() {
         display: 'flex', alignItems: 'center',
         paddingTop: 24, borderTop: '1px solid rgba(255,255,255,0.15)', marginTop: 32,
       }}>
-        <div style={{ fontFamily: FM, fontSize: S.caption, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <div style={{ fontFamily: FM, fontSize: S.small, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
           A genuine celebration of what the business built across the year
         </div>
       </div>
@@ -1302,7 +1342,7 @@ function WC_ThePrize() {
           </div>
         </div>
 
-        <div style={{
+        <HoverLift style={{
           background: WC.paper, border: `1px solid ${WC.line}`,
           borderRadius: 16, padding: '22px 28px',
           display: 'flex', alignItems: 'center', gap: 28,
@@ -1315,7 +1355,7 @@ function WC_ThePrize() {
             🥇
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 4 }}>
+            <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4, marginBottom: 4 }}>
               Round Prize
             </div>
             <div style={{ fontSize: S.bodyS, fontWeight: 700, color: WC.ink, lineHeight: 1.2, marginBottom: 4 }}>
@@ -1325,7 +1365,7 @@ function WC_ThePrize() {
               A meaningful personal prize for each team member, plus a public company-wide announcement. Winning a round is a real achievement, not just a stepping stone.
             </div>
           </div>
-        </div>
+        </HoverLift>
 
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginTop: 4 }}>
           <Tag color={WC.ink2} bg={WC.paper2}>Grand Final Prize — three layers</Tag>
@@ -1333,22 +1373,22 @@ function WC_ThePrize() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18, flex: 1 }}>
           {prizes.map((p, i) => (
-            <div key={i} style={{
+            <HoverLift key={i} dark={!!p.dark} style={{
               background: p.bg, border: `1px solid ${p.borderColor}`,
               borderRadius: 20, padding: '26px 28px',
               display: 'flex', flexDirection: 'column', gap: 12,
             }}>
               <div style={{ fontSize: 36 }}>{p.icon}</div>
-              <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: p.dark ? 'rgba(255,255,255,0.4)' : WC.ink4 }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: p.dark ? 'rgba(255,255,255,0.4)' : WC.ink4 }}>
                 {p.layer}
               </div>
               <div style={{ fontSize: S.bodyS, fontWeight: 700, color: p.dark ? '#fff' : WC.ink, lineHeight: 1.2 }}>
                 {p.title}
               </div>
-              <div style={{ fontSize: S.caption, lineHeight: 1.5, color: p.dark ? 'rgba(255,255,255,0.65)' : WC.ink3, flex: 1 }}>
+              <div style={{ fontSize: S.small, lineHeight: 1.5, color: p.dark ? 'rgba(255,255,255,0.72)' : WC.ink3, flex: 1 }}>
                 {p.body}
               </div>
-            </div>
+            </HoverLift>
           ))}
         </div>
       </div>
@@ -1413,7 +1453,7 @@ function WC_CompoundingEffect() {
       }} />
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 72 }}>
-        <div style={{ fontFamily: FM, fontSize: S.micro, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>
+        <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)' }}>
           Symphony AI World Cup / The Long Game
         </div>
         <Logo dark />
@@ -1441,11 +1481,15 @@ function WC_CompoundingEffect() {
               background: i === 0 ? 'rgba(255,255,255,0.05)' : 'transparent',
               padding: '26px 30px',
             }}>
-              <div style={{ fontFamily: FM, fontSize: S.micro, color: WC.indigo, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, marginBottom: 14 }}>
+              <div style={{
+                fontFamily: FM, fontSize: 64, lineHeight: 1,
+                color: '#fff', letterSpacing: '-0.02em',
+                fontWeight: 700, marginBottom: 18,
+              }}>
                 {String(i + 1).padStart(2, '0')}
               </div>
               <div style={{ fontSize: S.bodyS, fontWeight: 600, color: '#fff', lineHeight: 1.2, marginBottom: 12 }}>{title}</div>
-              <div style={{ fontSize: S.small, color: 'rgba(255,255,255,0.4)', lineHeight: 1.45 }}>{body}</div>
+              <div style={{ fontSize: S.small, color: '#fff', lineHeight: 1.45 }}>{body}</div>
             </div>
           ))}
         </div>

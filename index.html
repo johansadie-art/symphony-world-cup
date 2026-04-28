@@ -38,6 +38,38 @@
     background: #6C69FF; color: #fff; font-weight: 600; cursor: pointer;
   }
   #auth-error { margin-top: 10px; min-height: 20px; color: #FF9A9A; font-size: 13px; }
+
+  body.locked .deck-doc-nav { display: none; }
+  .deck-doc-nav {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 2147483100;
+    display: flex;
+    align-items: center;
+    gap: 6px 14px;
+    padding: 10px 18px;
+    background: rgba(11, 11, 20, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    font-family: "Poppins", system-ui, -apple-system, sans-serif;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+  .deck-doc-nav a {
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .deck-doc-nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .deck-doc-nav .deck-doc-sep {
+    color: rgba(255, 255, 255, 0.35);
+    user-select: none;
+  }
 </style>
 <script type="application/json" id="speaker-notes">[]</script>
 </head>
@@ -52,6 +84,12 @@
     <div id="auth-error"></div>
   </form>
 </div>
+
+<nav class="deck-doc-nav" aria-label="Reference documents">
+  <a href="rules.html">Rules</a>
+  <span class="deck-doc-sep" aria-hidden="true">·</span>
+  <a href="timeframes.html">Timeframes</a>
+</nav>
 
 <deck-stage width="1920" height="1080">
   <div id="s1"></div>

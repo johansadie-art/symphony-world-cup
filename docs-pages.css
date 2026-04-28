@@ -1,0 +1,149 @@
+/* Reference pages — Rules & Timeframes (pairs with colors_and_type.css) */
+
+.doc-body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.55;
+}
+
+.doc-site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  padding: 14px 24px;
+  background: rgba(246, 246, 249, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+
+.doc-site-nav a {
+  color: var(--indigo);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.125rem;
+}
+
+.doc-site-nav a:hover {
+  color: var(--indigo-700);
+  text-decoration: underline;
+}
+
+.doc-site-nav a[aria-current="page"] {
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.doc-main {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+.doc-main h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.doc-main h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 2.25rem 0 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.doc-main h2:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.doc-main h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.5rem;
+  color: var(--ink-2);
+}
+
+.doc-main p {
+  margin: 0 0 1rem;
+  color: var(--ink-2);
+}
+
+.doc-main ul {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+  color: var(--ink-2);
+}
+
+.doc-main li {
+  margin-bottom: 0.5rem;
+}
+
+.doc-main li strong {
+  color: var(--ink);
+}
+
+.doc-main hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2rem 0;
+}
+
+.doc-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.doc-main table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.0625rem;
+}
+
+.doc-main th,
+.doc-main td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.doc-main tr:last-child th,
+.doc-main tr:last-child td {
+  border-bottom: 0;
+}
+
+.doc-main th {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper-2);
+  white-space: nowrap;
+}
+
+.doc-main td {
+  color: var(--ink-2);
+}
+
+.doc-main .doc-lead {
+  font-size: 1.125rem;
+  color: var(--ink-3);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
