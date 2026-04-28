@@ -1,0 +1,299 @@
+/* =========================================================================
+   Symphony Design System — Tokens
+   colors_and_type.css
+   ========================================================================= */
+
+/* ---------- Fonts (self-hosted Poppins TTFs in fonts/) ----------------- */
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 100; font-display: swap; src: url("fonts/Poppins-Thin.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 100; font-display: swap; src: url("fonts/Poppins-ThinItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 200; font-display: swap; src: url("fonts/Poppins-ExtraLight.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 200; font-display: swap; src: url("fonts/Poppins-ExtraLightItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 300; font-display: swap; src: url("fonts/Poppins-Light.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 300; font-display: swap; src: url("fonts/Poppins-LightItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 400; font-display: swap; src: url("fonts/Poppins-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 400; font-display: swap; src: url("fonts/Poppins-Italic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/Poppins-Medium.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 500; font-display: swap; src: url("fonts/Poppins-MediumItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 600; font-display: swap; src: url("fonts/Poppins-SemiBold.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 600; font-display: swap; src: url("fonts/Poppins-SemiBoldItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/Poppins-Bold.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 700; font-display: swap; src: url("fonts/Poppins-BoldItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/Poppins-ExtraBold.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 800; font-display: swap; src: url("fonts/Poppins-ExtraBoldItalic.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 900; font-display: swap; src: url("fonts/Poppins-Black.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-style: italic; font-weight: 900; font-display: swap; src: url("fonts/Poppins-BlackItalic.ttf") format("truetype"); }
+
+:root {
+  /* ---------- Brand color ----------------------------------------------- */
+  --indigo:        #6C69FF;     /* the one and only brand color */
+  --indigo-600:    #5754F2;     /* hover */
+  --indigo-700:    #4441D9;     /* press */
+  --indigo-50:     #F2F1FF;     /* tint surface */
+  --indigo-100:    #E4E3FF;
+  --indigo-200:    #C9C7FF;
+  --indigo-300:    #A6A3FF;
+  --indigo-400:    #8784FF;
+  --indigo-500:    #6C69FF;     /* alias of --indigo */
+  --indigo-800:    #2F2DA6;
+  --indigo-900:    #1B1A66;
+
+  /* ---------- Neutrals (cool gray ramp) --------------------------------- */
+  --ink:           #0B0B14;     /* primary text */
+  --ink-2:         #2A2A38;     /* secondary text */
+  --ink-3:         #5A5A6B;     /* tertiary text */
+  --ink-4:         #8A8A99;     /* muted text */
+  --line:          #E6E6EC;     /* hairline borders */
+  --line-2:        #D8D8E0;     /* stronger borders */
+  --paper:         #F6F6F9;     /* app/marketing background */
+  --paper-2:       #EDEDF2;     /* subtle band */
+  --surface:       #FFFFFF;     /* cards & surfaces */
+
+  /* ---------- Foreground / background semantic aliases ------------------ */
+  --fg-1:          var(--ink);
+  --fg-2:          var(--ink-2);
+  --fg-3:          var(--ink-3);
+  --fg-muted:      var(--ink-4);
+  --fg-on-indigo:  #FFFFFF;
+  --fg-link:       var(--indigo);
+
+  --bg-1:          var(--paper);
+  --bg-2:          var(--surface);
+  --bg-3:          var(--paper-2);
+  --bg-indigo:     var(--indigo);
+  --bg-ink:        var(--ink);
+
+  /* ---------- Semantic (product UI) ------------------------------------- */
+  --success:       #18A957;
+  --success-bg:    #E8F7EE;
+  --warn:          #C77700;
+  --warn-bg:       #FFF4E0;
+  --error:         #D6334B;
+  --error-bg:      #FCE7EB;
+  --info:          var(--indigo);
+  --info-bg:       var(--indigo-50);
+
+  /* ---------- Typography — base ----------------------------------------- */
+  --font-sans:     "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono:     ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --fw-regular:    400;
+  --fw-medium:     500;
+  --fw-semibold:   600;
+  --fw-bold:       700;
+
+  /* Type scale — generous, display-led (rem-based, 16px root) */
+  --fs-display-1:  clamp(3.5rem, 6vw, 5.5rem);   /* 56–88 */
+  --fs-display-2:  clamp(2.75rem, 4.5vw, 4rem);  /* 44–64 */
+  --fs-h1:         clamp(2.25rem, 3.5vw, 3rem);  /* 36–48 */
+  --fs-h2:         clamp(1.75rem, 2.5vw, 2.25rem); /* 28–36 */
+  --fs-h3:         1.5rem;                        /* 24 */
+  --fs-h4:         1.25rem;                       /* 20 */
+  --fs-body-lg:    1.125rem;                      /* 18 */
+  --fs-body:       1rem;                          /* 16 */
+  --fs-body-sm:    0.875rem;                      /* 14 */
+  --fs-caption:    0.75rem;                       /* 12 */
+  --fs-eyebrow:    0.8125rem;                     /* 13 */
+
+  --lh-tight:      1.05;
+  --lh-snug:       1.2;
+  --lh-normal:     1.5;
+  --lh-relaxed:    1.65;
+
+  --tr-tight:      -0.03em;
+  --tr-snug:       -0.02em;
+  --tr-normal:     0;
+  --tr-eyebrow:    0.08em;
+
+  /* ---------- Spacing (4px grid) ---------------------------------------- */
+  --space-0:       0;
+  --space-1:       4px;
+  --space-2:       8px;
+  --space-3:       12px;
+  --space-4:       16px;
+  --space-5:       24px;
+  --space-6:       32px;
+  --space-7:       48px;
+  --space-8:       64px;
+  --space-9:       96px;
+  --space-10:      128px;
+
+  /* ---------- Radii ----------------------------------------------------- */
+  --radius-sm:     4px;     /* inputs */
+  --radius-md:     8px;     /* buttons */
+  --radius-lg:     12px;    /* cards */
+  --radius-xl:     20px;    /* large surfaces */
+  --radius-pill:   999px;   /* tag chips only */
+
+  /* ---------- Shadows / elevation --------------------------------------- */
+  --elev-0:        none;
+  --elev-1:        0 1px 2px rgba(11,11,20,0.06), 0 1px 1px rgba(11,11,20,0.04);
+  --elev-2:        0 4px 12px rgba(11,11,20,0.08), 0 2px 4px rgba(11,11,20,0.04);
+  --elev-3:        0 16px 40px rgba(11,11,20,0.12), 0 4px 12px rgba(11,11,20,0.06);
+
+  /* ---------- Motion ---------------------------------------------------- */
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-hover:     180ms;
+  --dur-ui:        240ms;
+  --dur-page:      480ms;
+
+  /* ---------- Focus ring ------------------------------------------------ */
+  --focus-ring:    0 0 0 2px var(--surface), 0 0 0 4px var(--indigo);
+}
+
+/* =========================================================================
+   Semantic typography classes
+   ========================================================================= */
+
+html { font-family: var(--font-sans); color: var(--fg-1); background: var(--bg-1); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+.display-1, h1.display, .h-display {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-display-1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg-1);
+}
+.display-2 {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-display-2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+}
+h1, .h1 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-snug);
+  color: var(--fg-1);
+}
+h2, .h2 {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-snug);
+}
+h3, .h3 {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-snug);
+}
+h4, .h4 {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+}
+p, .body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+.body-lg, .lead {
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+}
+.body-sm    { font-size: var(--fs-body-sm); line-height: var(--lh-normal); }
+.caption    { font-size: var(--fs-caption); line-height: var(--lh-normal); color: var(--fg-3); }
+.eyebrow {
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+}
+
+a { color: var(--fg-link); text-decoration: none; transition: opacity var(--dur-hover) var(--ease-in-out); }
+a:hover { opacity: 0.8; }
+
+/* =========================================================================
+   Building blocks (buttons, cards, etc.) — minimal so kits can extend
+   ========================================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-body-sm);
+  height: 40px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--dur-hover) var(--ease-in-out),
+              transform var(--dur-hover) var(--ease-in-out),
+              box-shadow var(--dur-hover) var(--ease-in-out);
+}
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.btn:active        { transform: scale(0.98); }
+
+.btn-primary   { background: var(--indigo); color: var(--fg-on-indigo); }
+.btn-primary:hover  { background: var(--indigo-600); }
+.btn-primary:active { background: var(--indigo-700); }
+
+.btn-secondary { background: var(--surface); color: var(--fg-1); border-color: var(--line-2); }
+.btn-secondary:hover  { background: var(--paper); border-color: var(--ink-3); }
+
+.btn-ghost     { background: transparent; color: var(--fg-1); }
+.btn-ghost:hover { background: var(--paper-2); }
+
+.btn-lg { height: 48px; padding: 0 var(--space-6); font-size: var(--fs-body); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: box-shadow var(--dur-ui) var(--ease-in-out),
+              border-color var(--dur-ui) var(--ease-in-out);
+}
+.card:hover { box-shadow: var(--elev-2); border-color: transparent; }
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-sm);
+  color: var(--fg-1);
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--dur-hover) var(--ease-in-out),
+              box-shadow var(--dur-hover) var(--ease-in-out);
+}
+.input:hover { border-color: var(--ink-4); }
+.input:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px var(--indigo-100); }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 4px 10px;
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  border-radius: var(--radius-pill);
+  background: var(--indigo-50);
+  color: var(--indigo-700);
+}
+
+.eyebrow-row {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.eyebrow-row::before {
+  content: "";
+  width: 24px; height: 1px;
+  background: var(--indigo);
+}
