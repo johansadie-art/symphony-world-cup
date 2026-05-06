@@ -256,7 +256,7 @@ function WC_Cover() {
           paddingTop: 28, borderTop: '1px solid rgba(255,255,255,0.15)',
         }}>
           <div style={{ fontFamily: FM, fontSize: S.small, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-            Multi-disciplinary · Quarterly rounds · Grand Final
+            Multi-disciplinary · Rounds · Grand Final
           </div>
         </div>
       </div>
@@ -285,10 +285,10 @@ function WC_WhatIsIt() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
           <p style={{ fontSize: S.bodyS, lineHeight: 1.6, color: WC.ink2, margin: 0 }}>
-            A company-wide initiative designed to drive AI adoption from the inside out. Multi-disciplinary teams tackle real Symphony business problems using AI, competing across four quarterly rounds before a Grand Final Event where a champion is crowned.
+            A company-wide initiative designed to drive AI adoption from the inside out. Multi-disciplinary squads tackle real Symphony business problems using AI, competing across four rounds before a Grand Final Event where a champion is crowned.
           </p>
           <p style={{ fontSize: S.small, lineHeight: 1.55, color: WC.ink3, margin: 0 }}>
-            Every team that participates leaves something tangible behind: a documented business process or new solution, a working AI tool, and measured proof of value created.
+            Every squad that participates leaves something tangible behind: a documented business process or new solution, a working AI tool, and measured proof of value created.
           </p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             {['Documented process or opportunity', 'Working AI solution', 'Measured value'].map((t, i) => (
@@ -349,12 +349,12 @@ function WC_Objectives() {
 }
 
 function WC_SeasonStructure() {
-  const quarters = [
-    { label: 'Q1', title: 'Round 1', desc: 'Top ideas from Round 1 are shortlisted for the Grand Final.', n: '01' },
-    { label: 'Q2', title: 'Round 2', desc: 'Top ideas from Round 2 are shortlisted for the Grand Final.', n: '02' },
-    { label: 'Q3', title: 'Round 3', desc: 'Top ideas from Round 3 are shortlisted for the Grand Final.', n: '03' },
-    { label: 'Q4', title: 'Round 4', desc: 'Top ideas from Round 4 complete the Grand Final lineup.', n: '04' },
-    { label: 'End of Year', title: 'Grand Final', desc: 'Top ideas generated across rounds are compared head-to-head. Champion crowned.', highlight: true },
+  const rounds = [
+    { label: 'Round 1', title: 'Round 1', desc: 'Top three solutions advance to the Grand Final.', n: '01' },
+    { label: 'Round 2', title: 'Round 2', desc: 'Top three solutions advance to the Grand Final.', n: '02' },
+    { label: 'Round 3', title: 'Round 3', desc: 'Top three solutions advance to the Grand Final.', n: '03' },
+    { label: 'Round 4', title: 'Round 4', desc: 'Top three solutions complete the finalist lineup.', n: '04' },
+    { label: 'End of Year', title: 'Grand Final', desc: 'Up to 12 finalists compete. Champion crowned.', highlight: true },
   ];
   return (
     <Slide bg={WC.paper} label="04 Season Structure">
@@ -362,7 +362,7 @@ function WC_SeasonStructure() {
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 56 }}>
         <div>
           <div style={{ fontSize: S.title, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.03em', color: WC.ink }}>
-            Four quarterly rounds.<br/>One champion.
+            Four rounds.<br/>One champion.
           </div>
           <div style={{ marginTop: 16, fontSize: S.small, color: WC.ink3, maxWidth: '60ch', lineHeight: 1.45 }}>
             A season runs over a full year. Each round generates high-value ideas and solutions. At the Grand Final Event, the top ideas from the rounds are compared head-to-head. It is a standalone end-of-year event, not a build round.
@@ -375,7 +375,7 @@ function WC_SeasonStructure() {
             background: `linear-gradient(to right, ${WC.indigo}, ${WC.indigo})`,
             zIndex: 0,
           }} />
-          {quarters.map((m, i) => (
+          {rounds.map((m, i) => (
             <div key={i} style={{ flex: 1, position: 'relative', zIndex: 1, paddingRight: 12 }}>
               <div style={{
                 width: 54, height: 54, borderRadius: '50%',
@@ -410,27 +410,69 @@ function WC_SeasonStructure() {
   );
 }
 
+function WC_LeagueTable() {
+  const rows = [
+    ['Updated after every Match Day', 'Round standings and scores are published within 48 hours.'],
+    ['Visible to the whole company', 'Every region sees who is active, advancing, and improving.'],
+    ['Not a prize mechanism', 'There is no prize for topping the table. It drives visibility and momentum.'],
+    ['Tracks season progression', 'Shows top-performing squads and how many solutions each region has advanced.'],
+  ];
+  return (
+    <Slide bg={WC.surface} label="05 League Table">
+      <Rail chapter="Season" />
+      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1.25fr', gap: 88, alignItems: 'center' }}>
+        <div>
+          <div style={{ marginBottom: 14 }}><Tag>Visibility mechanic</Tag></div>
+          <div style={{ fontSize: S.title, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.03em', color: WC.ink, marginBottom: 18 }}>
+            The League<br />Table.
+          </div>
+          <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.5, maxWidth: '38ch' }}>
+            A running season table keeps squads, leaders, and regions aligned on progress between rounds.
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {rows.map(([title, body], i) => (
+            <div key={i} style={{
+              display: 'flex', gap: 18, alignItems: 'flex-start',
+              padding: '18px 0',
+              borderBottom: i < rows.length - 1 ? `1px solid ${WC.line}` : 'none',
+            }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, width: 24, marginTop: 2 }}>
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <div>
+                <div style={{ fontSize: S.bodyS, fontWeight: 700, color: WC.ink, marginBottom: 4 }}>{title}</div>
+                <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.45 }}>{body}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
 function WC_RoundEntry() {
   const cards = [
     {
       n: '01',
       title: 'Enter any round',
-      body: 'Teams may enter any round and as many rounds as they choose throughout the season.',
+      body: 'Squads may enter any round and as many rounds as they choose throughout the season.',
     },
     {
       n: '02',
       title: 'Different problem each time',
-      body: 'A team that enters multiple rounds must bring a different problem to each one. No repeats.',
+      body: 'A squad that enters multiple rounds must bring a different problem to each one. No repeats.',
       accent: true,
     },
     {
       n: '03',
       title: 'Keep entering after wins',
-      body: 'Teams can continue entering later rounds with new problems, even after a round win. The goal is to solve as many business problems as possible.',
+      body: 'Squads can continue entering later rounds with new problems, even after a round win. The goal is to solve as many business problems as possible.',
     },
   ];
   return (
-    <Slide bg={WC.surface} label="05 Round Entry">
+    <Slide bg={WC.surface} label="06 Round Entry">
       <Rail chapter="Season" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 56 }}>
         <div>
@@ -440,7 +482,7 @@ function WC_RoundEntry() {
             <span style={{ color: WC.indigo }}>Different problem</span> each time.
           </div>
           <div style={{ marginTop: 16, fontSize: S.small, color: WC.ink3, maxWidth: '60ch', lineHeight: 1.45 }}>
-            Teams aren't capped at one entry per season. Bring a fresh problem each round and keep solving throughout the year.
+            Squads aren't capped at one entry per season. Bring a fresh problem each round and keep solving throughout the year.
           </div>
         </div>
 
@@ -471,14 +513,14 @@ function WC_RoundEntry() {
 
 function WC_SeasonKickoff() {
   const phases = [
-    { label: 'T-6 weeks', title: 'Announce', desc: 'Central owner announces the new season company-wide. Problem Bank opens for department submissions. Region managers briefed.' },
-    { label: 'T-4 weeks', title: 'Scope', desc: 'Problem Bank closes. Leadership validates and scopes entries. Final Problem Bank published.' },
-    { label: 'T-2 weeks', title: 'Register', desc: 'Team registration opens. Matching pool opens for individuals without a team. Track B submissions accepted.' },
-    { label: 'T-1 week', title: 'Finalise', desc: 'Track B submissions reviewed and answered within 48 hours. Team rosters finalised and submitted to region managers.' },
-    { label: 'Day 1', title: 'Round 1 begins', desc: 'The season is live. Teams begin Foundation phase.', highlight: true },
+    { label: 'T-6 weeks', title: 'Announce', desc: 'Central owner announces the new season company-wide. Pitch Board opens for department submissions. Region managers briefed. Squad Coaches recruited.' },
+    { label: 'T-4 weeks', title: 'Scope', desc: 'Pitch Board closes. Leadership validates and scopes entries. Final Pitch Board published.' },
+    { label: 'T-2 weeks', title: 'Register', desc: 'Squad registration opens. Matching pool opens for individuals without a squad. Track B submissions accepted.' },
+    { label: 'T-1 week', title: 'Finalise', desc: 'Track B submissions reviewed and answered within 48 hours. Squad rosters finalised and submitted to region managers. Squad Coaches assigned.' },
+    { label: 'Day 1', title: 'Round 1 begins', desc: 'The season is live. Squads begin Foundation phase.', highlight: true },
   ];
   return (
-    <Slide bg={WC.paper} label="06 Season Kickoff" noEnterAnimation>
+    <Slide bg={WC.paper} label="07 Season Kickoff" noEnterAnimation>
       <Rail chapter="Season" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 56 }}>
         <div>
@@ -487,7 +529,7 @@ function WC_SeasonKickoff() {
             Six weeks to launch.
           </div>
           <div style={{ marginTop: 16, fontSize: S.small, color: WC.ink3, maxWidth: '60ch', lineHeight: 1.45 }}>
-            Each season follows a defined launch sequence so problems, teams, and panels are all in place before Round 1 begins.
+            Each season follows a defined launch sequence so problems, squads, and coaches are all in place before Round 1 begins.
           </div>
         </div>
 
@@ -535,10 +577,10 @@ function WC_SeasonKickoff() {
 function WC_TeamsDivider() {
   return (
     <DividerSlide
-      label="07 Teams"
+      label="08 Squads"
       sectionNum="02"
-      title={"Build the\nright team."}
-      subtitle="Every team must span four disciplines. No exceptions."
+      title={"Build the\nright squad."}
+      subtitle="Every squad must span four disciplines. No exceptions."
       footer="Design · Product · Engineering or Data · Business SME"
     />
   );
@@ -552,14 +594,14 @@ function WC_TeamComposition() {
     { name: 'Business SME', icon: '◉', desc: 'Domain expert who validates the problem and signs off on results.', color: WC.indigo700 },
   ];
   return (
-    <Slide bg={WC.surface} label="08 Team Composition">
-      <Rail chapter="Teams" />
+    <Slide bg={WC.surface} label="09 Squad Composition">
+      <Rail chapter="Squads" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 36 }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
             <div style={{ marginBottom: 14 }}><Tag>Composition</Tag></div>
             <div style={{ fontSize: S.subtitle, fontWeight: 700, letterSpacing: '-0.02em', color: WC.ink }}>
-              Four disciplines. Four to five people.
+              Four disciplines. Four to five players.
             </div>
           </div>
           <div style={{
@@ -591,7 +633,7 @@ function WC_TeamComposition() {
           background: WC.indigo50, borderRadius: 12, padding: '16px 24px',
           fontSize: S.small, color: WC.indigo700, lineHeight: 1.4,
         }}>
-          <strong>If a discipline is missing:</strong> Region managers run a volunteer matching pool. As a last resort, one discipline (never more) may be substituted with AI — but the team must demonstrate how during their pitch.
+          <strong>If a discipline is missing:</strong> Region managers run a volunteer matching pool. As a last resort, one discipline (never more) may be substituted with AI — but the squad must demonstrate how during their pitch.
         </div>
       </div>
     </Slide>
@@ -603,11 +645,11 @@ function WC_SMERule() {
     ['Brings domain knowledge', 'The as-is process lives in their head. Nobody else can document or describe it credibly.'],
     ['Validates the results', 'They sign off that the measured numbers are genuine, not projected or modelled.'],
     ['Champions the rollout', 'After the competition, they become the natural owner for scaling the solution within their part of the business.'],
-    ['Inherits Problem Bank problems', 'The person who submitted a problem becomes the SME for whichever team picks it.'],
+    ['Inherits Pitch Board problems', 'The person who submitted a problem becomes the SME for whichever squad picks it.'],
   ];
   return (
-    <Slide bg={WC.paper} label="09 The SME Rule">
-      <Rail chapter="Teams" />
+    <Slide bg={WC.paper} label="10 The SME Rule">
+      <Rail chapter="Squads" />
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
         <div>
           <div style={{ marginBottom: 24 }}><Tag>Core role</Tag></div>
@@ -615,7 +657,7 @@ function WC_SMERule() {
             The SME is not an advisor.
           </div>
           <div style={{ fontSize: S.bodyS, color: WC.ink3, lineHeight: 1.5, marginBottom: 28 }}>
-            They are a core team member — the domain expert no other discipline can replace.
+            They are a core squad member — the domain expert no other discipline can replace.
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
             <div style={{
@@ -663,16 +705,55 @@ function WC_SMERule() {
   );
 }
 
-function WC_RegionalModel() {
-  const duties = [
-    'Drive team recruitment and ensure every team is properly formed before the round begins',
-    'Facilitate the matching pool to connect teams with missing disciplines',
-    'Maintain momentum — Slack updates, shoutouts, keeping the energy up throughout',
-    'Run a dry-run pitch session with each of their teams before demo day',
-    'Show up publicly and visibly on demo day to champion their teams',
+function WC_SquadCoach() {
+  const points = [
+    'Coach meets the squad at the start of the round to sharpen scope and outcomes.',
+    'Coach is available throughout the build as a sounding board for decisions.',
+    'Coach runs The Friendly before Match Day to pressure-test assumptions and numbers.',
+    'Coach helps advocate for high-potential solutions beyond the competition.',
   ];
   return (
-    <Slide bg={WC.surface} label="10 Regional Model">
+    <Slide bg={WC.surface} label="11 Squad Coach">
+      <Rail chapter="Squads" />
+      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 88, alignItems: 'center' }}>
+        <div>
+          <div style={{ marginBottom: 14 }}><Tag>Performance support</Tag></div>
+          <div style={{ fontSize: S.title, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.03em', color: WC.ink, marginBottom: 18 }}>
+            Every squad has<br />a Squad Coach.
+          </div>
+          <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.5, maxWidth: '38ch' }}>
+            The Squad Coach is a senior employee who is not a player on the squad. Their role is mentoring and performance support.
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {points.map((point, i) => (
+            <div key={i} style={{
+              display: 'flex', gap: 18, alignItems: 'flex-start',
+              padding: '18px 0',
+              borderBottom: i < points.length - 1 ? `1px solid ${WC.line}` : 'none',
+            }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, width: 24, marginTop: 2 }}>
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <div style={{ fontSize: S.small, color: WC.ink2, lineHeight: 1.45 }}>{point}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
+function WC_RegionalModel() {
+  const duties = [
+    'Drive squad recruitment and ensure every squad is properly formed before the round begins',
+    'Facilitate the matching pool to connect squads with missing disciplines',
+    'Maintain momentum — Slack updates, shoutouts, keeping the energy up throughout',
+    'Coordinate Squad Coach assignments and keep coaching support in place throughout the round',
+    'Show up publicly and visibly on Match Day to champion their squads',
+  ];
+  return (
+    <Slide bg={WC.surface} label="12 Regional Model">
       <Rail chapter="Organisation" />
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 96, alignItems: 'start' }}>
         <div>
@@ -681,7 +762,7 @@ function WC_RegionalModel() {
             Organisers and champions.<br />Not competitors.
           </div>
           <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.5, marginBottom: 28 }}>
-            No regional leaderboard. All teams compete in one global pool regardless of where they are based.
+            No regional leaderboard. All squads compete in one global pool regardless of where they are based.
           </div>
           <div style={{
             background: WC.indigo50, border: `1px solid ${WC.indigo100}`,
@@ -689,7 +770,7 @@ function WC_RegionalModel() {
           }}>
             <div style={{ fontSize: S.small, fontWeight: 700, color: WC.indigo, marginBottom: 8 }}>The recognition</div>
             <div style={{ fontSize: S.small, color: WC.ink2, lineHeight: 1.4 }}>
-              If a team from a region wins, that is the region manager's moment too. Their region produced the champion — recognised publicly.
+              If a squad from a region wins, that is the region manager's moment too. Their region produced the champion — recognised publicly.
             </div>
           </div>
         </div>
@@ -719,16 +800,16 @@ function WC_RegionalModel() {
 
 function WC_CentralOwnership() {
   const responsibilities = [
-    'Maintain and publish the Problem Bank before each season',
+    'Maintain and publish the Pitch Board before each season',
     'Run the Track B approval panel for open pitch submissions',
     'Set and communicate judging criteria and the pitch framework each round',
-    'Organise Demo Days and the Grand Final Event',
-    'Publish results, scores, and Dragon feedback after each round',
+    'Organise Match Days and the Grand Final Event',
+    'Publish results, scores, and Match Reports after each round',
     'Oversee fast-track implementation of winning solutions',
     'Evolve the rules and format between seasons based on what is learned',
   ];
   return (
-    <Slide bg={WC.paper} label="11 Central Ownership">
+    <Slide bg={WC.paper} label="13 Central Ownership">
       <Rail chapter="Organisation" />
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 96, alignItems: 'start' }}>
         <div>
@@ -792,7 +873,7 @@ function WC_ProblemSourcing() {
     minHeight: 0,
   };
   return (
-    <Slide bg={WC.paper} label="12 Problem Sourcing" pad={false}>
+    <Slide bg={WC.paper} label="14 Problem Sourcing" pad={false}>
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flexShrink: 0, paddingTop: PT, paddingLeft: PX, paddingRight: PX, paddingBottom: 40 }}>
           <div style={{ fontFamily: FM, fontSize: S.small, letterSpacing: '0.1em', textTransform: 'uppercase', color: WC.ink4 }}>
@@ -806,7 +887,7 @@ function WC_ProblemSourcing() {
             <div style={trackBody}>
               <Tag>Track A</Tag>
               <div style={{ fontSize: S.subtitle, fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: WC.ink }}>
-                The Problem Bank
+                The Pitch Board
               </div>
               <div style={{ fontSize: S.bodyS, color: WC.ink2, lineHeight: 1.5 }}>
                 A curated backlog of real Symphony business problems compiled and maintained by leadership.
@@ -815,7 +896,7 @@ function WC_ProblemSourcing() {
                 {[
                   'Pre-validated and scoped to a single round',
                   'Comes with a named SME attached',
-                  'Team picks a problem; that SME joins the team',
+                  'Squad picks a problem; that SME joins the squad',
                 ].map((t, i) => <Bullet key={i}>{t}</Bullet>)}
               </div>
             </div>
@@ -829,13 +910,13 @@ function WC_ProblemSourcing() {
                 Open Pitch
               </div>
               <div style={{ fontSize: S.bodyS, color: WC.ink2, lineHeight: 1.5 }}>
-                Teams identify their own problem and find their own SME from within that part of the business.
+                Squads identify their own problem and find their own SME from within that part of the business.
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {[
                   'Submit a one-paragraph problem statement before the round begins',
                   'Reviewed and approved or redirected within 48 hours',
-                  'Team sources their own SME from within the business',
+                  'Squad sources their own SME from within the business',
                 ].map((t, i) => <Bullet key={i}>{t}</Bullet>)}
               </div>
             </div>
@@ -858,22 +939,22 @@ function WC_ProblemSourcing() {
 
 function WC_QuarterlyRound() {
   const phases = [
-    { week: 'Weeks 1–2', title: 'Foundation', activity: 'Teams confirmed, problem locked. Process improvement teams begin as-is documentation. Net new teams define the opportunity and how value will be measured.' },
+    { week: 'Weeks 1–2', title: 'Foundation', activity: 'Squads confirmed, problem locked. Process improvement squads begin as-is documentation. Net new squads define the opportunity and how value will be measured. Squad Coach intro session.' },
     { week: 'Weeks 3–6', title: 'Build', activity: 'Solution designed and built with AI. First test run on real data or workflows. Mid-point check-in with the region manager.' },
     { week: 'Weeks 7–9', title: 'Results', activity: 'Solution running. Real results being gathered. Pitch preparation begins.' },
-    { week: 'Weeks 10–12', title: 'Demo', activity: 'Region manager dry-run pitch. Final refinements. Demo Day.', highlight: true },
+    { week: 'Weeks 10–12', title: 'Match Prep', activity: 'The Friendly with Squad Coach. Final refinements. Match Day.', highlight: true },
   ];
   return (
-    <Slide bg={WC.surface} label="13 Quarterly Round">
+    <Slide bg={WC.surface} label="15 The Round">
       <Rail chapter="Structure" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 40 }}>
         <div>
-          <div style={{ marginBottom: 14 }}><Tag>The quarter</Tag></div>
+          <div style={{ marginBottom: 14 }}><Tag>The round</Tag></div>
           <div style={{ fontSize: S.subtitle, fontWeight: 700, letterSpacing: '-0.02em', color: WC.ink }}>
-            Each round runs across a full quarter — 10 to 12 weeks.
+            Each round runs for approximately 10 to 12 weeks.
           </div>
           <div style={{ marginTop: 12, fontSize: S.small, color: WC.ink3, maxWidth: '64ch', lineHeight: 1.5 }}>
-            Teams work part-time alongside their day jobs, with AI doing the heavy execution work. The quarter breaks into four phases.
+            Squads work part-time alongside their day jobs, with AI doing the heavy execution work. The round breaks into four phases.
           </div>
         </div>
 
@@ -907,7 +988,7 @@ function WC_QuarterlyRound() {
         }}>
           {[
             { n: '10', label: 'minutes to present', accent: true },
-            { n: '5', label: 'minutes Q&A with the Dragons', accent: false },
+            { n: '5', label: 'minutes Q&A with the Scouts', accent: false },
           ].map((item, i) => (
             <React.Fragment key={i}>
               {i > 0 && <div style={{ width: 1, height: 26, background: WC.line }} />}
@@ -925,7 +1006,7 @@ function WC_QuarterlyRound() {
             </React.Fragment>
           ))}
           <div style={{ flex: 1 }} />
-          <div style={{ fontSize: S.small, color: WC.ink4 }}>Demo Day format per team</div>
+          <div style={{ fontSize: S.small, color: WC.ink4 }}>Match Day format per squad</div>
         </div>
       </div>
     </Slide>
@@ -935,10 +1016,10 @@ function WC_QuarterlyRound() {
 function WC_DeliverablesDivider() {
   return (
     <DividerSlide
-      label="14 Deliverables"
+      label="16 Deliverables"
       sectionNum="03"
-      title={"What teams\nmust deliver."}
-      subtitle="Three deliverables are mandatory for every team. A fourth applies depending on the type of solution."
+      title={"What squads\nmust deliver."}
+      subtitle="Three deliverables are mandatory for every squad. A fourth applies depending on the type of solution."
       footer="Working Solution · Measured Results · The New State · As-Is or Opportunity"
     />
   );
@@ -948,14 +1029,14 @@ function WC_WhatTeamsDeliver() {
   const mandatory = [
     { n: '01', title: 'The Working Solution', body: 'Built, deployed, and running. Not a prototype. Not a mockup. Something that actually worked during the round on real data or workflows.', accent: false },
     { n: '02', title: 'Measured Results', body: 'Quantified evidence of real value created. Time saved, errors reduced, cost removed, new capability demonstrated. The SME validates the numbers.', accent: true },
-    { n: '03', title: 'The New State', body: 'A clear picture of how things now work with the AI solution in place — clear enough that someone outside the team could understand and operate it.', accent: false },
+    { n: '03', title: 'The New State', body: 'A clear picture of how things now work with the AI solution in place — clear enough that someone outside the squad could understand and operate it.', accent: false },
   ];
   return (
-    <Slide bg={WC.paper} label="15 Four Deliverables">
+    <Slide bg={WC.paper} label="17 Four Deliverables">
       <Rail chapter="Deliverables" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 18 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-          <Tag>Mandatory for all teams</Tag>
+            <Tag>Mandatory for all squads</Tag>
           <div style={{ fontSize: S.small, color: WC.ink4, letterSpacing: '0.04em' }}>
             Missing any mandatory element disqualifies the submission.
           </div>
@@ -1016,7 +1097,7 @@ function WC_WhatTeamsDeliver() {
               Opportunity Definition
             </div>
             <div style={{ fontSize: S.small, lineHeight: 1.5, color: WC.ink3 }}>
-              What gap or opportunity did the team identify? Why does it matter to the business? What was the evidence it was worth solving? Replaces the as-is for teams building something that didn't previously exist.
+              What gap or opportunity did the squad identify? Why does it matter to the business? What was the evidence it was worth solving? Replaces the as-is for squads building something that didn't previously exist.
             </div>
           </HoverLift>
         </div>
@@ -1025,22 +1106,22 @@ function WC_WhatTeamsDeliver() {
   );
 }
 
-function WC_DragonsDen() {
-  const dragons = [
-    { title: 'The Business Dragon', desc: 'Senior Symphony leadership. Do the numbers stack up? Is this a real problem worth solving?', highlight: false },
-    { title: 'The Technical Dragon', desc: 'Engineering or data leadership. Can this actually work? Is it robust? Does it scale?', highlight: false },
-    { title: 'The Client Dragon', desc: 'Commercial leadership. Could this be packaged for clients? Would the market pay for it?', highlight: false },
-    { title: 'The Wildcard Dragon', desc: 'Rotates each round. External guest, client, industry figure, or the previous round\'s winning team captain.', highlight: true },
+function WC_ScoutsPanel() {
+  const scouts = [
+    { title: 'The Sporting Director', desc: 'Senior Symphony leadership. Do the numbers stack up? Is this a real problem worth solving?', highlight: false },
+    { title: 'The Technical Director', desc: 'Engineering or data leadership. Can this actually work? Is it robust? Does it scale?', highlight: false },
+    { title: 'The Commercial Director', desc: 'Commercial leadership. Could this be packaged for clients? Would the market pay for it?', highlight: false },
+    { title: 'The Guest Scout', desc: 'Rotates each round. External guest, client, industry figure, or the previous round\'s winning squad captain.', highlight: true },
   ];
   return (
-    <Slide bg={WC.paper} label="16 Dragons Den">
+    <Slide bg={WC.paper} label="18 The Scouts">
       <Rail chapter="Judging" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 36 }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
             <div style={{ marginBottom: 14 }}><Tag>The judging panel</Tag></div>
             <div style={{ fontSize: S.subtitle, fontWeight: 700, letterSpacing: '-0.02em', color: WC.ink }}>
-              Four dragons. Four lenses.
+              Four Scouts. Four lenses.
             </div>
           </div>
           <div style={{
@@ -1048,12 +1129,12 @@ function WC_DragonsDen() {
             borderRadius: 12, padding: '14px 22px', maxWidth: 380,
             fontSize: S.small, color: WC.ink3, lineHeight: 1.4,
           }}>
-            <strong style={{ color: WC.ink }}>Grand Final:</strong> more senior panel + at least one external Dragon. Scores revealed only after every team has pitched.
+            <strong style={{ color: WC.ink }}>Grand Final:</strong> more senior panel + at least one external Scout. Scores revealed only after every squad has pitched.
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 18, flex: 1 }}>
-          {dragons.map((d, i) => (
+          {scouts.map((d, i) => (
             <HoverLift key={i} dark={!!d.highlight} style={{
               background: d.highlight ? WC.indigo : WC.surface,
               border: `1px solid ${d.highlight ? WC.indigo : WC.line}`,
@@ -1091,7 +1172,7 @@ function WC_RoundScoringCriteria() {
     { label: 'Presentation clarity', weight: 15, color: WC.indigo700 },
   ];
   return (
-    <Slide bg={WC.surface} label="17 Round Scoring Criteria">
+    <Slide bg={WC.surface} label="19 Round Scoring Criteria">
       <Rail chapter="Judging" />
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '360px 1fr', gap: 96, alignItems: 'center' }}>
         <div>
@@ -1128,13 +1209,14 @@ function WC_RoundScoringCriteria() {
 
 function WC_GrandFinalScoringCriteria() {
   const criteria = [
-    { label: 'Credibility and scale of measured results', weight: 30, color: WC.indigo },
-    { label: 'Business significance of the problem solved', weight: 25, color: '#8784FF' },
-    { label: 'Scalability across the wider business', weight: 25, color: WC.indigo600 },
-    { label: 'AI innovation and creativity', weight: 20, color: WC.indigo700 },
+    { label: 'Credibility and scale of measured results', owner: 'Scouts' },
+    { label: 'Business significance of the problem solved', owner: 'Scouts' },
+    { label: 'Scalability across the wider business', owner: 'Scouts' },
+    { label: 'AI innovation and creativity', owner: 'Scouts' },
+    { label: 'Symphony staff vote', owner: 'Live event vote' },
   ];
   return (
-    <Slide bg={WC.paper} label="18 Grand Final Scoring">
+    <Slide bg={WC.paper} label="20 Grand Final Scoring">
       <Rail chapter="Judging" />
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '360px 1fr', gap: 96, alignItems: 'center' }}>
         <div>
@@ -1146,21 +1228,22 @@ function WC_GrandFinalScoringCriteria() {
             Round winners may have solved completely different problems. The Grand Final criteria assess the quality, significance, and scalability of each solution — not raw numbers compared head-to-head.
           </div>
           <div style={{ fontSize: S.small, color: WC.ink4, lineHeight: 1.45 }}>
-            Top round ideas. Dragon judging plus Symphony staff vote. One champion.
+            The weighting between Scout scores and staff vote is set by the central owner and published before the event.
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {criteria.map((c, i) => (
-            <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 24 }}>
-                <div style={{ fontSize: S.bodyS, fontWeight: 600, color: WC.ink, lineHeight: 1.3 }}>{c.label}</div>
-                <div style={{ fontFamily: FM, fontSize: S.subtitle, fontWeight: 700, color: c.color, letterSpacing: '-0.02em', flexShrink: 0 }}>
-                  {c.weight}%
+            <div key={i} style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              border: `1px solid ${WC.line}`, borderRadius: 12, padding: '16px 18px',
+              background: WC.surface,
+            }}>
+              <div style={{ fontSize: S.small, fontWeight: 600, color: WC.ink, lineHeight: 1.3 }}>
+                {c.label}
+              </div>
+              <div style={{ fontFamily: FM, fontSize: S.small, fontWeight: 700, color: WC.indigo, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                {c.owner}
                 </div>
-              </div>
-              <div style={{ height: 8, background: WC.paper2, borderRadius: 999, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${c.weight}%`, background: c.color, borderRadius: 999 }} />
-              </div>
             </div>
           ))}
         </div>
@@ -1169,20 +1252,20 @@ function WC_GrandFinalScoringCriteria() {
   );
 }
 
-function WC_SupportingTeams() {
+function WC_SupportingSquads() {
   const supports = [
-    { title: 'Pitch Framework', body: 'Every team receives a framework that tells them what the Dragons expect to see. It adapts to the problem type — as-is and delta for process improvement, opportunity and evidence for net new ideas.' },
-    { title: 'Published Question Bank', body: "Likely Dragon questions shared upfront. No team should be disadvantaged because they didn't know what to expect." },
-    { title: 'Region Manager Dry Run', body: "Before demo day every team pitches to their region manager, who plays Devil's Dragon — challenge the numbers, poke at feasibility." },
-    { title: 'AI Pitch Preparation', body: 'Teams are explicitly encouraged to use AI to prepare. Simulate judge questions. Pressure-test the business case.' },
-    { title: 'Post-Round Feedback', body: 'Every team, not just winners, receives written feedback from the Dragons within 48 hours. What worked, what would have changed the score.' },
+    { title: 'Pitch Framework', body: 'Every squad receives a framework that tells them what the Scouts expect to see. It adapts to the problem type — as-is and delta for process improvement, opportunity and evidence for net new ideas.' },
+    { title: 'Published Question Bank', body: "Likely Scout questions shared upfront. No squad should be disadvantaged because they didn't know what to expect." },
+    { title: 'The Friendly', body: "Before Match Day every squad runs The Friendly with their Squad Coach — challenge the numbers, stress assumptions, and prepare for Scout questions." },
+    { title: 'AI Pitch Preparation', body: 'Squads are explicitly encouraged to use AI to prepare. Simulate Scout questions. Pressure-test the business case.' },
+    { title: 'Match Report', body: 'Every squad, not just winners, receives a written Match Report from the Scouts within 48 hours. What worked, what would have changed the score.' },
   ];
   return (
-    <Slide bg={WC.paper} label="19 Supporting Teams">
+    <Slide bg={WC.paper} label="21 Supporting Squads">
       <Rail chapter="Support" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 32 }}>
         <div>
-          <div style={{ marginBottom: 14 }}><Tag>How we set teams up to win</Tag></div>
+          <div style={{ marginBottom: 14 }}><Tag>How we set squads up to win</Tag></div>
           <div style={{ fontSize: S.subtitle, fontWeight: 700, letterSpacing: '-0.02em', color: WC.ink }}>
             Five ways we remove the guesswork.
           </div>
@@ -1209,23 +1292,23 @@ function WC_SupportingTeams() {
 
 function WC_GrandFinalEvent() {
   const formatItems = [
-    { label: 'Pitch', value: '15 min', sub: 'extended format per team' },
-    { label: 'Q&A', value: '7 min', sub: 'with the Dragon panel' },
+    { label: 'Pitch format', value: 'Owner-set', sub: 'based on finalist count' },
+    { label: 'Q&A', value: 'Owner-set', sub: 'set with the event format' },
     { label: 'Pitch order', value: 'Random draw', sub: 'on the day' },
     { label: 'Audience', value: 'Company-wide', sub: 'in person + livestream' },
     { label: 'Staff vote', value: 'Live vote', sub: 'Symphony employees pick their favourite' },
   ];
   const beats = [
     'Held in person where possible, with a company-wide livestream for those not attending',
-    'Full Dragon panel including at least one external guest — a client, investor, or industry figure',
+    'Full Scout panel including at least one external Scout — a client, investor, or industry figure',
     'Top ideas generated during the rounds are presented — no new build required for the Final',
-    'Dragons deliberate live, each naming their pick and reasoning publicly',
+    'Scouts deliberate live, each naming their pick and reasoning publicly',
     'Symphony staff cast a live vote on their favourite final idea',
-    'Final winner announced using Dragon scoring plus staff vote',
+    'Final winner announced using combined Scout score and staff vote',
   ];
   return (
     <section
-      data-screen-label="20 Grand Final Event"
+      data-screen-label="22 Grand Final Event"
       style={{
         width: '100%', height: '100%',
         background: GRAD_DARK, fontFamily: F, boxSizing: 'border-box',
@@ -1248,7 +1331,7 @@ function WC_GrandFinalEvent() {
             Symphony AI World Cup / The Grand Final
           </span>
         </div>
-        <Tag color="rgba(255,255,255,0.9)" bg="rgba(255,255,255,0.15)">End of year</Tag>
+        <Tag color="rgba(255,255,255,0.9)" bg="rgba(255,255,255,0.15)">End of year (target: April)</Tag>
       </div>
 
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 80, alignItems: 'center' }}>
@@ -1260,7 +1343,7 @@ function WC_GrandFinalEvent() {
             The centrepiece<br/>of the season.
           </div>
           <div style={{ fontSize: S.bodyS, color: 'rgba(255,255,255,0.65)', maxWidth: '40ch', lineHeight: 1.5, marginBottom: 32 }}>
-            A company-wide event where the strongest ideas generated in the quarterly rounds compete for the championship. It is not a build round — no new solutions are required. Teams present what they built in-round, updated with any additional results gathered since.
+            A company-wide event where the strongest ideas generated in the rounds compete for the championship. It is not a build round — no new solutions are required. Squads present what they built in-round, updated with any additional results gathered since.
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
@@ -1322,12 +1405,12 @@ function WC_GrandFinalEvent() {
 
 function WC_ThePrize() {
   const prizes = [
-    { icon: '🏆', layer: 'Layer 01', title: 'The Trophy', body: "A physical, permanent trophy that lives with the winning team's region. Bragging rights that last beyond the season.", bg: WC.paper, borderColor: WC.line, dark: false },
-    { icon: '🎁', layer: 'Layer 02', title: 'The Personal Prize', body: 'Something significant for each member of the Grand Final winning team. A trip, a learning budget, or tech gear — something worth competing hard for.', bg: WC.indigo50, borderColor: WC.indigo100, dark: false },
-    { icon: '🚀', layer: 'Layer 03', title: 'The Real Prize', body: 'The winning solution gets resourced and actually implemented across the business. The winning team\'s SME leads adoption. This is the most powerful motivator.', bg: WC.indigo, borderColor: WC.indigo, dark: true },
+    { icon: '🏆', layer: 'Layer 01', title: 'The Trophy', body: "A physical, permanent trophy that lives with the winning squad's region. Bragging rights that last beyond the season.", bg: WC.paper, borderColor: WC.line, dark: false },
+    { icon: '🎁', layer: 'Layer 02', title: 'The Personal Prize', body: 'Something significant for each member of the Grand Final winning squad. A trip, a learning budget, or tech gear — something worth competing hard for.', bg: WC.indigo50, borderColor: WC.indigo100, dark: false },
+    { icon: '🚀', layer: 'Layer 03', title: 'The Real Prize', body: 'The winning solution gets resourced and actually implemented across the business. The winning squad\'s SME leads adoption. This is the most powerful motivator.', bg: WC.indigo, borderColor: WC.indigo, dark: true },
   ];
   return (
-    <Slide bg={WC.surface} label="21 The Prize">
+    <Slide bg={WC.surface} label="23 The Prize">
       <Rail chapter="The Prize" />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 28 }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
@@ -1338,7 +1421,7 @@ function WC_ThePrize() {
             </div>
           </div>
           <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.4, maxWidth: 380 }}>
-            A round prize each quarter. A bigger Grand Final prize at the end of the year.
+            A round prize each round. A bigger Grand Final prize at the end of the year.
           </div>
         </div>
 
@@ -1362,7 +1445,7 @@ function WC_ThePrize() {
               Recognised and rewarded immediately.
             </div>
             <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.4 }}>
-              A meaningful personal prize for each team member, plus a public company-wide announcement. Winning a round is a real achievement, not just a stepping stone.
+              A meaningful personal prize for each squad member, plus a public company-wide announcement. Winning a round is a real achievement, not just a stepping stone.
             </div>
           </div>
         </HoverLift>
@@ -1396,9 +1479,51 @@ function WC_ThePrize() {
   );
 }
 
+function WC_AIPerformanceManagement() {
+  const levels = [
+    ['Level 1', 'Aware', 'Understands what AI can and cannot do.'],
+    ['Level 2', 'Assisted', 'Uses AI tools regularly in day-to-day work.'],
+    ['Level 3', 'Enabled', 'Builds practical solutions and workflows with AI.'],
+    ['Level 4', 'Led', 'Shapes how AI is adopted across teams and clients.'],
+  ];
+  return (
+    <Slide bg={WC.paper} label="24 AI Performance Management">
+      <Rail chapter="Capability" />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 30 }}>
+        <div>
+          <div style={{ marginBottom: 14 }}><Tag>AI capability framework</Tag></div>
+          <div style={{ fontSize: S.subtitle, fontWeight: 700, letterSpacing: '-0.02em', color: WC.ink, marginBottom: 10 }}>
+            Aware → Assisted → Enabled → Led
+          </div>
+          <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.5, maxWidth: '66ch' }}>
+            The AI World Cup is one of Symphony's clearest proving grounds for Levels 3 and 4.
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, flex: 1 }}>
+          {levels.map(([level, title, body], i) => (
+            <HoverLift key={i} style={{
+              background: WC.surface, border: `1px solid ${WC.line}`,
+              borderTop: `4px solid ${WC.indigo}`,
+              borderRadius: 14, padding: '22px 20px',
+              display: 'flex', flexDirection: 'column', gap: 10,
+            }}>
+              <div style={{ fontFamily: FM, fontSize: S.small, color: WC.indigo, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                {level}
+              </div>
+              <div style={{ fontSize: S.bodyS, fontWeight: 700, color: WC.ink }}>{title}</div>
+              <div style={{ fontSize: S.small, color: WC.ink3, lineHeight: 1.45 }}>{body}</div>
+            </HoverLift>
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+}
+
 function WC_TimeCommitment() {
   return (
-    <Slide bg={WC.paper} label="22 Time Commitment">
+    <Slide bg={WC.paper} label="25 Time Commitment">
       <Rail chapter="Commitment" />
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 96, alignItems: 'center' }}>
         <div>
@@ -1409,14 +1534,14 @@ function WC_TimeCommitment() {
             per week.
           </div>
           <div style={{ fontSize: S.bodyS, color: WC.ink3, lineHeight: 1.5, maxWidth: '36ch' }}>
-            AI does the heavy execution work. The team's job is to direct it — not manually build everything from scratch.
+            AI does the heavy execution work. The squad's job is to direct it — not manually build everything from scratch.
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           {[
             { title: 'This is legitimate work.', body: 'Participation in the AI World Cup is not an after-hours personal project. Leadership must visibly protect this time.', accent: false },
             { title: 'Region managers set the tone.', body: 'They communicate this clearly in their regions at the start of each season and hold the line throughout.', accent: false },
-            { title: 'AI is mandatory — in the solution and how you build it.', body: 'Every team must use AI as a core part of their solution. How AI was used is part of the judging criteria.', accent: true },
+            { title: 'AI is mandatory — in the solution and how you build it.', body: 'Every squad must use AI as a core part of their solution. How AI was used is part of the judging criteria.', accent: true },
           ].map((item, i) => (
             <div key={i} style={{
               background: item.accent ? WC.indigo50 : WC.surface,
@@ -1436,7 +1561,7 @@ function WC_TimeCommitment() {
 function WC_CompoundingEffect() {
   return (
     <section
-      data-screen-label="23 Compounding Effect"
+      data-screen-label="26 Compounding Effect"
       style={{
         width: '100%', height: '100%',
         background: GRAD_DARK, fontFamily: F, boxSizing: 'border-box',
@@ -1505,25 +1630,28 @@ const SLIDES = [
   ['s2',  WC_WhatIsIt],
   ['s3',  WC_Objectives],
   ['s4',  WC_SeasonStructure],
-  ['s5',  WC_RoundEntry],
-  ['s6',  WC_SeasonKickoff],
-  ['s7',  WC_TeamsDivider],
-  ['s8',  WC_TeamComposition],
-  ['s9',  WC_SMERule],
-  ['s10', WC_RegionalModel],
-  ['s11', WC_CentralOwnership],
-  ['s12', WC_ProblemSourcing],
-  ['s13', WC_QuarterlyRound],
-  ['s14', WC_DeliverablesDivider],
-  ['s15', WC_WhatTeamsDeliver],
-  ['s16', WC_DragonsDen],
-  ['s17', WC_RoundScoringCriteria],
-  ['s18', WC_GrandFinalScoringCriteria],
-  ['s19', WC_SupportingTeams],
-  ['s20', WC_GrandFinalEvent],
-  ['s21', WC_ThePrize],
-  ['s22', WC_TimeCommitment],
-  ['s23', WC_CompoundingEffect],
+  ['s5',  WC_LeagueTable],
+  ['s6',  WC_RoundEntry],
+  ['s7',  WC_SeasonKickoff],
+  ['s8',  WC_TeamsDivider],
+  ['s9',  WC_TeamComposition],
+  ['s10', WC_SMERule],
+  ['s11', WC_SquadCoach],
+  ['s12', WC_RegionalModel],
+  ['s13', WC_CentralOwnership],
+  ['s14', WC_ProblemSourcing],
+  ['s15', WC_QuarterlyRound],
+  ['s16', WC_DeliverablesDivider],
+  ['s17', WC_WhatTeamsDeliver],
+  ['s18', WC_ScoutsPanel],
+  ['s19', WC_RoundScoringCriteria],
+  ['s20', WC_GrandFinalScoringCriteria],
+  ['s21', WC_SupportingSquads],
+  ['s22', WC_GrandFinalEvent],
+  ['s23', WC_ThePrize],
+  ['s24', WC_AIPerformanceManagement],
+  ['s25', WC_TimeCommitment],
+  ['s26', WC_CompoundingEffect],
 ];
 
 SLIDES.forEach(([id, Component]) => {
